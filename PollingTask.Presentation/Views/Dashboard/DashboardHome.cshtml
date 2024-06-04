@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+        ViewData["Title"] = "Dashboard Home";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming the layout for Admin Login is _Layout.cshtml
+       // ViewData["Title"] = "Admin Login";
+    }
+}
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to the Admin Dashboard</h1>
+        <p class="lead">This is the main dashboard page. Use the sidebar to navigate to different sections.</p>
+        <hr class="my-4">
+        <img src="~/images/polling.jpg" alt="Dashboard Image" class="img-fluid mb-3" />
+    </div>
+}
+else
+{
+    <div class="jumbotron text-center">
+        <a asp-controller="Dashboard" asp-action="AdminLogin" class="btn btn-primary">Return To Login Page</a>
+        <!-- Add your admin login form or content here -->
+    </div>
+
+}

@@ -1,0 +1,81 @@
+﻿@using PollingTask.Presentation.Models
+@using PollingTask.Presentation.ViewModels
+@model CreateQuestionViewModel
+@{
+    ViewData["Title"] = "Update Question";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+<h1>Update Question</h1>
+
+<form asp-action="UpdateQuestion" method="post">
+    <input type="hidden" asp-for="QuestionId" />
+
+    <div class="form-group">
+        <label asp-for="QuestionText"></label>
+        <input asp-for="QuestionText" class="form-control" />
+        <span asp-validation-for="QuestionText" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label asp-for="PollId"></label>
+        <select asp-for="PollId" class="form-control" asp-items="ViewBag.PollIds"></select>
+        <span asp-validation-for="PollId" class="text-danger"></span>
+    </div>
+
+    <h2>Answers</h2>
+    <div id="answers-container">
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            <div class="form-group answer" data-answer-index="@i">
+                <input type="hidden" asp-for="@Model.Answers[i].Id" />
+                <label>Answer @(i + 1)</label>
+                <input type="text" asp-for="@Model.Answers[i].AnswerText" class="form-control" />
+                <br />
+                <span asp-validation-for="@Model.Answers[i].AnswerText" class="text-danger"></span>
+            </div>
+        }
+    </div>
+    <br />
+    <button type="button" id="add-answer" class="btn btn-secondary">Add Answer</button>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-controller="Dashboard" asp-action="GetAllQuestions" class="btn btn-danger">Cancel</a>
+
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let answerIndex = @Model.Answers.Count;
+
+            $('#add-answer').click(function () {
+                var answerHtml = `
+                            <div class="form-group answer" data-answer-index="${answerIndex}">
+                                <input type="hidden" name="Answers[${answerIndex}].Id" value="0" />
+                                <label>Answer ${answerIndex + 1}</label>
+                                <input type="text" name="Answers[${answerIndex}].AnswerText" class="form-control" />
+                                <button type="button" class="btn btn-danger btn-sm remove-answer" data-answer-index="${answerIndex}">Remove</button>
+                            </div>`;
+                $('#answers-container').append(answerHtml);
+                answerIndex++;
+            });
+
+            $('#answers-container').on('click', '.remove-answer', function () {
+                $(this).closest('.answer').remove();
+
+                // Re-index the remaining answers
+                $('#answers-container .answer').each(function (index) {
+                    $(this).attr('data-answer-index', index);
+                    $(this).find('label').text('Answer ' + (index + 1));
+                    $(this).find('input[type="hidden"]').attr('name', 'Answers[' + index + '].Id');
+                    $(this).find('input[type="text"]').attr('name', 'Answers[' + index + '].AnswerText');
+                    $(this).find('.remove-answer').attr('data-answer-index', index);
+                });
+
+                answerIndex = $('#answers-container .answer').length;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿@using PollingTask.Presentation.Models
+@using PollingTask.Presentation.ViewModels
+@model ViewPollViewModel
+@{
+    ViewData["Title"] = "View Poll";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+
+}
+
+<h1>View Poll: @Model.PollText</h1>
+
+<div class="list-group">
+    @foreach (var question in Model.Questions)
+    {
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">@question.Text</h4>
+            <p class="list-group-item-text">
+                <a href="@Url.Action("ViewQuestion", "Dashboard", new { id = question.Id })" class="btn btn-primary">View</a>
+            </p>
+        </div>
+    }
+</div>
+
+<br />
+
+<a asp-controller="Dashboard" asp-action="GetAllQuestions" class="btn btn-secondary">Back</a>

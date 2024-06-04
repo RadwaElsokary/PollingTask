@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PollingTask.Presentation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container">
+        <h1>All Questions</h1>
+        <div id="polls-container">
+            <!-- Polls will be dynamically inserted here -->
+        </div>
+        <a href="@Url.Action("CreateQuestion", "Dashboard")" class="btn btn-success">+ Add Question</a>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            fetchQuestions();
+
+            function fetchQuestions() {
+                $.ajax({
+                    url: '@Url.Action("GetAllQuestionsApi", "Dashboard")',
+                    method: 'GET',
+                    success: function (data) {
+                        console.log("Questions fetched:", data); // Log the data for debugging
+                        renderQuestions(data);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching questions:', error);
+                    }
+                });
+            }
+
+            function renderQuestions(questions) {
+                var pollsContainer = $('#polls-container');
+                pollsContainer.empty(); // Clear previous content
+
+                if (questions && questions.length > 0) {
+                    var table = $('<table class="table table-striped"></table>');
+                    var thead = $('<thead><tr><th>Id</th><th>Text</th><th>PollId</th><th>Actions</th></tr></thead>');
+                    var tbody = $('<tbody></tbody>');
+
+                    questions.forEach(function (question) {
+                        var row = $('<tr></tr>');
+                        row.append('<td>' + question.id + '</td>');
+                        row.append('<td>' + question.text + '</td>');
+                        row.append('<td>' + question.pollId + '</td>');
+                        row.append('<td>' +
+                            '<a href="/Dashboard/ViewQuestion/' + question.id + '" class="btn btn-primary">View</a>' +
+                            ' <a href="/Dashboard/UpdateQuestion/' + question.id + '" class="btn btn-primary">Update</a>' +
+                            ' <button class="btn btn-danger delete-question" data-question-id="' + question.id + '">Delete</button>' +
+                            '</td>');
+                        tbody.append(row);
+                    });
+
+                    table.append(thead).append(tbody);
+                    pollsContainer.append(table);
+                } else {
+                    pollsContainer.append('<p>No Questions available.</p>');
+                }
+            }
+
+            // Handle delete button click
+            $('#polls-container').on('click', '.delete-question', function () {
+                var questionId = $(this).data('question-id');
+                var confirmDelete = confirm("Are you sure you want to delete this question?");
+                if (confirmDelete) {
+                    $.ajax({
+                        url: '/Dashboard/DeleteQuestion/' + questionId,
+                        method: 'DELETE',
+                        success: function (response) {
+                            console.log('Question deleted successfully.');
+                            fetchQuestions(); // Reload questions after successful deletion
+                        },
+                        error: function (error) {
+                            console.error('Error deleting question:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

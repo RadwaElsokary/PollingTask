@@ -1,0 +1,45 @@
+﻿@using PollingTask.Presentation.Models
+@using PollingTask.Presentation.ViewModels
+@model CreateQuestionViewModel
+@{
+    ViewData["Title"] = "View Question";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+
+}
+
+<h1>View Question</h1>
+
+<form asp-action="ViewQuestion" method="post">
+    <input type="hidden" asp-for="QuestionId" />
+
+    <div class="form-group">
+        <label asp-for="Poll"></label>
+        <input asp-for="Poll" class="form-control" />
+        <span asp-validation-for="Poll" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label asp-for="QuestionText"></label>
+        <input asp-for="QuestionText" class="form-control" />
+        <span asp-validation-for="QuestionText" class="text-danger"></span>
+    </div>
+    <br />
+
+    <h2>Answers</h2>
+    <div id="answers-container">
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            <div class="form-group answer" data-answer-index="@i">
+                <input type="hidden" asp-for="@Model.Answers[i].Id" />
+                <label>Answer @(i + 1)</label>
+                <input type="text" asp-for="@Model.Answers[i].AnswerText" class="form-control" />
+                <br />
+                <span asp-validation-for="@Model.Answers[i].AnswerText" class="text-danger"></span>
+            </div>
+        }
+    </div>
+    <br />
+    <button type="button" onclick="history.back()" class="btn btn-secondary">Back</button>
+</form>

@@ -1,0 +1,85 @@
+﻿@using PollingTask.Presentation.Models;
+@using PollingTask.Presentation.ViewModels;
+@model CreateQuestionViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Create Question";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+<div class="container">
+    <h1>Create Question</h1>
+
+    <form enctype="multipart/form-data" asp-controller="Dashboard" asp-action="CreateQuestionPost" method="post" class="mt-3">
+        <div class="form-group row">
+            <label asp-for="PollId" class="col-sm-2 col-form-label">Poll</label>
+            <div class="col-sm-10">
+                <select asp-for="PollId" class="form-control" asp-items="@ViewBag.PollIds"></select>
+                <span asp-validation-for="PollId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group row">
+            <label asp-for="QuestionText" class="col-sm-2 col-form-label">Question</label>
+            <div class="col-sm-10">
+                <input asp-for="QuestionText" class="form-control" placeholder="Question" />
+                <span asp-validation-for="QuestionText" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <div id="answers-container">
+            @for (int i = 0; i < Model.Answers.Count; i++)
+            {
+                <div class="form-group row answer">
+                    <label class="col-sm-2 col-form-label">Answer @(i + 1)</label>
+                    <div class="col-sm-9">
+                        <input type="text" asp-for="@Model.Answers[i].AnswerText" class="form-control mb-2" placeholder="Answer" />
+                        <span asp-validation-for="@Model.Answers[i].AnswerText" class="text-danger"></span>
+                        <input type="hidden" asp-for="@Model.Answers[i].QuestionId" />
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger delete-answer">Delete</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button type="button" id="add-answer" class="btn btn-primary mt-3">Add Answer</button>
+
+        <div class="mt-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <button type="submit" class="btn btn-success">Create Question</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#add-answer').click(function () {
+                var answerIndex = $('.answer').length;
+                var answerHtml = '<div class="form-group row answer">' +
+                    '<label class="col-sm-2 col-form-label">Answer ' + (answerIndex + 1) + '</label>' +
+                    '<div class="col-sm-9">' +
+                    '<input type="text" name="Answers[' + answerIndex + '].AnswerText" class="form-control mb-2" placeholder="Answer" />' +
+                    '<span class="text-danger"></span>' +
+                    '<input type="hidden" name="Answers[' + answerIndex + '].QuestionId" value="@Model.QuestionId" />' +
+                    '</div>' +
+                    '<div class="col-sm-1">' +
+                    '<button type="button" class="btn btn-danger delete-answer">Delete</button>' +
+                    '</div>' +
+                    '</div>';
+                $('#answers-container').append(answerHtml);
+            });
+
+            $(document).on('click', '.delete-answer', function () {
+                $(this).closest('.answer').remove();
+            });
+        });
+    </script>
+}
+

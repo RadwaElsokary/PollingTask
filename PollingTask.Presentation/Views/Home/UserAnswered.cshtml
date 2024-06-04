@@ -1,0 +1,94 @@
+﻿@using PollingTask.Presentation.Models;
+@using PollingTask.Presentation.ViewModels;
+@model LastQuestionViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Your Answer</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .answer {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .btn-back {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .btn-back:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                View Your Answer
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Poll: @Model.PollText</h4>
+                <h5 class="mb-4">Question: @Model.QuestionText</h5>
+                @if (!string.IsNullOrEmpty(Model.AnswerText))
+                {
+                    <div class="answer">
+                        <strong>Your Answer:</strong>
+                        <p>@Model.AnswerText</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        You haven't answered this question yet.
+                    </div>
+                }
+                <a class="btn btn-back mt-3 disabled">Your Answer Submitted</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

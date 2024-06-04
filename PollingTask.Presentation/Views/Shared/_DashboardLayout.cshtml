@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PollingTask.Presentation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            display: flex;
+        }
+
+        .sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background-color: darkcyan;
+            color: white;
+            padding-top: 20px;
+            height: 100vh;
+            position: fixed;
+        }
+
+            .sidebar a {
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .sidebar a:hover {
+                    background-color: #007bff;
+                }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a asp-controller="Dashboard" asp-action="GetAllPolls">Polls</a>
+        <a asp-controller="Dashboard" asp-action="GetAllQuestions">Questions</a>
+        <a asp-controller="Dashboard" asp-action="GetAllUserAnswers">User Answers</a>
+
+        
+        <footer>
+            <form id="logoutForm" asp-controller="Home" asp-action="Logout" method="post" class="mt-5">
+                <button type="submit" style="font-size:30px" class="btn btn-close-white">Sign out</button>
+            </form>
+        </footer>
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@using PollingTask.Presentation.Models;
+@using PollingTask.Presentation.ViewModels;
+@model LastQuestionViewModel
+
+@{
+    ViewData["Title"] = "Last Question";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2>@Model.PollText</h2>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">@Model.QuestionText</h4>
+            <hr />
+            <form asp-action="SubmitAnswer" method="post" class="mt-4">
+                <input type="hidden" asp-for="QuestionId" />
+
+                <div class="form-group">
+                    <label for="answerSelect" class="form-label">Select an answer:</label>
+                    <select id="answerSelect" class="form-control form-control-lg" asp-for="SelectedAnswerId" asp-items="@(new SelectList(Model.Answers, "Id", "AnswerText"))">
+                        <option value="">-- Select an answer --</option>
+                    </select>
+                    <small class="form-text text-muted">Choose the best answer from the list above.</small>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">Submit Answer</button>
+@*                     //<a asp-controller="Dashboard" asp-action="DashboardHome" class="btn btn-secondary btn-lg">Back to Dashboard</a>
+ *@                </div>
+            </form>
+        </div>
+    </div>
+</div>

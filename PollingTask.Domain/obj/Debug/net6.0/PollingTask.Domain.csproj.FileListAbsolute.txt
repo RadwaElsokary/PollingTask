@@ -1,0 +1,14 @@
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\bin\Debug\net6.0\PollingTask.Domain.deps.json
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\bin\Debug\net6.0\PollingTask.Domain.runtimeconfig.json
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\bin\Debug\net6.0\PollingTask.Domain.dll
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\bin\Debug\net6.0\PollingTask.Domain.pdb
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.csproj.AssemblyReference.cache
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.AssemblyInfoInputs.cache
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.AssemblyInfo.cs
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.csproj.CoreCompileInputs.cache
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.dll
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\refint\PollingTask.Domain.dll
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.pdb
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\PollingTask.Domain.genruntimeconfig.cache
+D:\Projects\.Net\Apps\PollingTask\PollingTask.Domain\obj\Debug\net6.0\ref\PollingTask.Domain.dll
